@@ -5,9 +5,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-
+import { ApiProperty } from '@nestjs/swagger';
 @Entity('users')
 export class User {
+  @ApiProperty({ description: 'The user id' })
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
