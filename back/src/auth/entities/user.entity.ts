@@ -24,12 +24,6 @@ export class User {
   @Column('text')
   fullName: string;
 
-  @Column('text', {
-    array: true,
-    default: ['user'],
-  })
-  roles: string[];
-
   @BeforeInsert()
   checkFieldsBeforeInsert() {
     this.email = this.email.toLowerCase().trim();
