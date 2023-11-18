@@ -55,3 +55,9 @@ $ cd .\front\
 ```bash
 $ npm install
 ```
+
+5. run the vite react project:
+
+```bash
+$ npm run dev
+```

@@ -48,7 +48,7 @@ export const GlobalProvider = () => {
     <GlobalContext.Provider value={{ setView, view, setIsLogged, isLogged }}>
       <Header setView={setView} />
       <main
-        className={`flex min-h-screen flex-col items-center justify-between sm:px-24 sm:pt-8 `}
+        className={`flex min-h-screen flex-col items-center  sm:px-24 sm:pt-8 `}
       >
         <Outlet />
       </main>

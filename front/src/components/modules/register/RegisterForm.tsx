@@ -103,7 +103,10 @@ export const RegisterForm = () => {
         />
         {!form.formState.isValid && <>{form.formState.errors.root?.message}</>}
         <div className="flex flex-col justify-center items-center mt-4">
-          <Button type="submit" className="bg-blue-400 rounded-full w-1/2">
+          <Button
+            type="submit"
+            className="bg-blue-400 rounded-full w-1/2 hover:bg-blue-300"
+          >
             {form.formState.isLoading ? "Loading..." : "Submit"}
           </Button>
         </div>

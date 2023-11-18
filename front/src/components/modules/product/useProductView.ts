@@ -9,16 +9,19 @@ export const useProductView = () => {
   const { isLogged } = useGlobalState();
   const navigate = useNavigate();
 
+  const [fetchState, setFetchState] = useState<TFetchState<Product[]>>({
+    isLoading: false,
+    data: null,
+    error: null,
+    filteredData: null,
+  });
+
   useEffect(() => {
     if (!isLogged) {
       navigate("/login");
     }
   }, [isLogged, navigate]);
-  const [fetchState, setFetchState] = useState<TFetchState<Product[]>>({
-    isLoading: false,
-    data: null,
-    error: null,
-  });
+
   useEffect(() => {
     setFetchState((prev) => ({
       ...prev,
@@ -46,6 +49,7 @@ export const useProductView = () => {
             ...prev,
             isLoading: false,
             data: unique,
+            filteredData: unique,
           }));
         })
         .catch((error) => {
@@ -60,6 +64,23 @@ export const useProductView = () => {
     }
   }, [isLogged]);
 
-  const { isLoading, data, error } = fetchState;
-  return { isLoading, data, error };
+  const { isLoading, data, error, filteredData } = fetchState;
+
+  const onSearch = (searchValue: string) => {
+    setFetchState((prev) => {
+      if (!prev.data) {
+        return {
+          ...prev,
+        };
+      }
+      const products = [...prev.data].filter((product) => {
+        return product.title.includes(searchValue);
+      });
+      return {
+        ...prev,
+        filteredData: products,
+      };
+    });
+  };
+  return { isLoading, data, error, filteredData, onSearch };
 };
