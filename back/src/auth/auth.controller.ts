@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
 
@@ -12,6 +12,7 @@ export class AuthController {
 
   @Public()
   @Post('register')
+  @HttpCode(200)
   @ApiOperation({ summary: 'Register the user' })
   @ApiResponse({ status: 200, description: 'Forbidden.' })
   createUser(@Body() createUserDto: CreateUserDto) {
@@ -20,6 +21,7 @@ export class AuthController {
 
   @Public()
   @Post('login')
+  @HttpCode(200)
   @ApiOperation({ summary: 'Login the user' })
   loginUser(@Body() loginUserDto: LoginUserDto) {
     return this.authService.login(loginUserDto);

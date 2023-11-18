@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
+import { expect } from 'chai';
 import { AppModule } from './../src/app.module';
 
 describe('AppController (e2e)', () => {
@@ -15,10 +16,32 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('should get a JWT then successfully make a call', async () => {
+    const registerReq = await request(app.getHttpServer())
+      .post('/auth/register')
+      .send({
+        email: 'jimmylo1606@hotmail.com',
+        password: 'Clave123',
+        fullName: 'Jimmy lopez',
+      })
+      .expect(400);
+
+    const token = registerReq.body.token;
+
     return request(app.getHttpServer())
-      .get('/')
+      .post('/auth/login')
+      .send({
+        email: 'jimmylo1606@hotmail.com',
+        password: 'Clave123',
+      })
+      .set('Authorization', 'Bearer ' + token)
       .expect(200)
-      .expect('Hello World!');
+      .expect(({ body }) => {
+        expect(body.email).to.equal('jimmylo1606@hotmail.com');
+      });
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 });
