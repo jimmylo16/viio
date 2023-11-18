@@ -36,6 +36,7 @@ export const GlobalProvider = () => {
     const token = localStorage.getItem("token");
     if (token) {
       setIsLogged(true);
+      setView("");
     } else {
       setIsLogged(false);
     }

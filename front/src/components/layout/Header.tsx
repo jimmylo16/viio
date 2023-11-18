@@ -17,6 +17,7 @@ export const Header = ({ setView }: HeaderProps) => {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     navigate("/");
+    window.location.reload();
   };
 
   return (

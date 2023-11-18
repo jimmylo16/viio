@@ -40,6 +40,7 @@ export class AuthService {
         token: this.getJwtToken({ id: user.id }),
       };
     } catch (error) {
+      console.log({ error });
       this.handleDBErrors(error);
     }
   }
@@ -77,7 +78,8 @@ export class AuthService {
   }
 
   private handleDBErrors(error: any): never {
-    if (error.code === '23505') throw new BadRequestException(error.detail);
+    if (error.code === '23505')
+      throw new BadRequestException('The user already exists');
 
     console.log(error);
 

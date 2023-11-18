@@ -26,33 +26,6 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: (
-//       <Layout>
-//         <App />
-//       </Layout>
-//     ),
-//     children: [],
-//   },
-//   {
-//     path: "/login",
-//     element: (
-//       <Layout>
-//         <Login />
-//       </Layout>
-//     ),
-//   },
-//   {
-//     path: "/register",
-//     element: (
-//       <Layout>
-//         <Register />
-//       </Layout>
-//     ),
-//   },
-// ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

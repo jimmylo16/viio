@@ -14,7 +14,11 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
+import { axiosCall } from "@/infraestructure/axios";
+import { BackendError } from "@/interfaces/common";
+import { AxiosError } from "axios";
+import { RegisterResponse } from "@/interfaces/backendResponses";
+import { useGlobalState } from "@/hooks/useGlobalContext";
 export const Register = () => {
   const form = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
@@ -24,10 +28,24 @@ export const Register = () => {
       password: "",
     },
   });
+  const { setIsLogged, setView } = useGlobalState();
 
-  function onSubmit(values: RegisterForm) {
-    console.log(values);
-  }
+  const onSubmit = async (values: RegisterForm) => {
+    try {
+      const registerResponse = await axiosCall<RegisterResponse>({
+        method: "post",
+        endpoint: "/auth/register",
+        body: values,
+      });
+      localStorage.setItem("token", registerResponse.token);
+      setIsLogged(true);
+      setView("");
+      window.location.reload();
+    } catch (error: unknown) {
+      const errorData = (error as AxiosError<BackendError>).response?.data;
+      form.setError("root", { type: "value", message: errorData?.message });
+    }
+  };
   return (
     <Form {...form}>
       <form
@@ -39,7 +57,7 @@ export const Register = () => {
           name="fullName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="pl-2 text-blue-700">fullName</FormLabel>
+              <FormLabel className="pl-2 text-blue-700">Full Name</FormLabel>
               <FormControl>
                 <Input
                   placeholder="fullName"
@@ -56,7 +74,7 @@ export const Register = () => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="pl-2 text-blue-700">email</FormLabel>
+              <FormLabel className="pl-2 text-blue-700">Email</FormLabel>
               <FormControl>
                 <Input placeholder="email" className="rounded-2xl" {...field} />
               </FormControl>
@@ -69,11 +87,12 @@ export const Register = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="pl-2 text-blue-700">password</FormLabel>
+              <FormLabel className="pl-2 text-blue-700">Password</FormLabel>
               <FormControl>
                 <Input
                   placeholder="password"
                   className="rounded-2xl"
+                  type="password"
                   {...field}
                 />
               </FormControl>
@@ -81,9 +100,10 @@ export const Register = () => {
             </FormItem>
           )}
         />
+        {!form.formState.isValid && <>{form.formState.errors.root?.message}</>}
         <div className="flex flex-col justify-center items-center mt-4">
           <Button type="submit" className="bg-blue-400 rounded-full w-1/2">
-            Submit
+            {form.formState.isLoading ? "Loading..." : "Submit"}
           </Button>
         </div>
       </form>

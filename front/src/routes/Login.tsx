@@ -11,19 +11,36 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { axiosCall } from "@/infraestructure/axios";
+import { LoginResponse } from "@/interfaces/backendResponses";
+import { useGlobalState } from "@/hooks/useGlobalContext";
+import { AxiosError } from "axios";
+import { BackendError } from "@/interfaces/common";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
   });
+  const { setIsLogged, setView } = useGlobalState();
+  const navigate = useNavigate();
 
-  function onSubmit(values: LoginForm) {
-    console.log(values);
-  }
+  const onSubmit = async (values: LoginForm) => {
+    try {
+      const loginResponse = await axiosCall<LoginResponse>({
+        method: "post",
+        endpoint: "/auth/login",
+        body: values,
+      });
+      localStorage.setItem("token", loginResponse.token);
+      setIsLogged(true);
+      setView("");
+      navigate("/");
+    } catch (error) {
+      const errorData = (error as AxiosError<BackendError>).response?.data;
+      form.setError("root", { type: "value", message: errorData?.message });
+    }
+  };
   return (
     <Form {...form}>
       <form
@@ -35,7 +52,7 @@ export const Login = () => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="pl-2 text-blue-700">email</FormLabel>
+              <FormLabel className="pl-2 text-blue-700">Email</FormLabel>
               <FormControl>
                 <Input placeholder="email" className="rounded-2xl" {...field} />
               </FormControl>
@@ -48,11 +65,12 @@ export const Login = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="pl-2 text-blue-700">password</FormLabel>
+              <FormLabel className="pl-2 text-blue-700">Password</FormLabel>
               <FormControl>
                 <Input
                   placeholder="password"
                   className="rounded-2xl"
+                  type="password"
                   {...field}
                 />
               </FormControl>
@@ -60,9 +78,10 @@ export const Login = () => {
             </FormItem>
           )}
         />
+        {!form.formState.isValid && <>{form.formState.errors.root?.message}</>}
         <div className="flex flex-col justify-center items-center mt-4">
           <Button type="submit" className="bg-blue-400 rounded-full w-1/2">
-            Submit
+            {form.formState.isLoading ? "Loading..." : "Submit"}
           </Button>
         </div>
       </form>
