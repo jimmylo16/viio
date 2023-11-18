@@ -42,6 +42,22 @@ Run the following command, the first time will be success as we are creating a r
 $ npm run test:e2e
 ```
 
+# Dockerize Backend:
+
+To run your project with docker,
+
+1. in the back folder Run the following command:
+
+```bash
+$ docker build -t nestjs-app .
+```
+
+2. Test your img
+
+```bash
+$ docker run --rm -p 3000:3000 nestjs-app
+```
+
 ## Front
 
 1. Navigate to the front folder
@@ -60,4 +76,28 @@ $ npm install
 
 ```bash
 $ npm run dev
+```
+
+# Testing
+
+In the front end folder sRun the following command
+
+```bash
+$ npm run test
+```
+
+# Dockerize FrontEnd:
+
+To run your project with docker,
+
+1. in the back folder Run the following command:
+
+```bash
+$ docker build -t vite-app .
+```
+
+2. Test your img
+
+```bash
+$ docker run --rm -p 5173:5173 vite-app
 ```

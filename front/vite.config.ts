@@ -14,4 +14,12 @@ export default defineConfig({
   define: {
     [`process.env.BACKEND_URL`]: `"${process.env.BACKEND_URL}"`,
   },
+  server: {
+    watch: {
+      usePolling: true,
+    },
+    host: true,
+    strictPort: true,
+    port: 5173, 
+  }
 });
