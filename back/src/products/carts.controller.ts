@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { ProductsService } from './products.service';
+import { ProductsService } from './carts.service';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('products')
