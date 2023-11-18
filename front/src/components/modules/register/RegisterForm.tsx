@@ -52,6 +52,7 @@ export const RegisterForm = () => {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-2 w-1/2 justify-center "
+        data-testid="register-form"
       >
         <FormField
           control={form.control}
@@ -63,6 +64,7 @@ export const RegisterForm = () => {
                 <Input
                   placeholder="fullName"
                   className="rounded-2xl"
+                  data-testid="fullNameInput"
                   {...field}
                 />
               </FormControl>
@@ -77,7 +79,12 @@ export const RegisterForm = () => {
             <FormItem>
               <FormLabel className="pl-2 text-blue-700">Email</FormLabel>
               <FormControl>
-                <Input placeholder="email" className="rounded-2xl" {...field} />
+                <Input
+                  placeholder="email"
+                  className="rounded-2xl"
+                  {...field}
+                  data-testid="emailInput"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -94,6 +101,7 @@ export const RegisterForm = () => {
                   placeholder="password"
                   className="rounded-2xl"
                   type="password"
+                  data-testid="passwordInput"
                   {...field}
                 />
               </FormControl>

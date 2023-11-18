@@ -48,6 +48,7 @@ export const LoginForm = () => {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-2 w-1/2 justify-center "
+        data-testid="login-form"
       >
         <FormField
           control={form.control}
@@ -56,7 +57,12 @@ export const LoginForm = () => {
             <FormItem>
               <FormLabel className="pl-2 text-blue-700">Email</FormLabel>
               <FormControl>
-                <Input placeholder="email" className="rounded-2xl" {...field} />
+                <Input
+                  placeholder="email"
+                  className="rounded-2xl"
+                  {...field}
+                  data-testid="emailInput"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -73,6 +79,7 @@ export const LoginForm = () => {
                   placeholder="password"
                   className="rounded-2xl"
                   type="password"
+                  data-testid="passwordInput"
                   {...field}
                 />
               </FormControl>
