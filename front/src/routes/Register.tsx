@@ -19,6 +19,7 @@ import { BackendError } from "@/interfaces/common";
 import { AxiosError } from "axios";
 import { RegisterResponse } from "@/interfaces/backendResponses";
 import { useGlobalState } from "@/hooks/useGlobalContext";
+
 export const Register = () => {
   const form = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
@@ -32,12 +33,12 @@ export const Register = () => {
 
   const onSubmit = async (values: RegisterForm) => {
     try {
-      const registerResponse = await axiosCall<RegisterResponse>({
+      await axiosCall<RegisterResponse>({
         method: "post",
         endpoint: "/auth/register",
         body: values,
       });
-      localStorage.setItem("token", registerResponse.token);
+
       setIsLogged(true);
       setView("");
       window.location.reload();

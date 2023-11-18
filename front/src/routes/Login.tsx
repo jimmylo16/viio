@@ -27,12 +27,11 @@ export const Login = () => {
 
   const onSubmit = async (values: LoginForm) => {
     try {
-      const loginResponse = await axiosCall<LoginResponse>({
+      await axiosCall<LoginResponse>({
         method: "post",
         endpoint: "/auth/login",
         body: values,
       });
-      localStorage.setItem("token", loginResponse.token);
       setIsLogged(true);
       setView("");
       navigate("/");

@@ -1,5 +1,6 @@
 import { TsetView, views } from "../GlobalContext";
 import { useGlobalState } from "@/hooks/useGlobalContext";
+import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 type HeaderProps = {
@@ -14,14 +15,13 @@ export const Header = ({ setView }: HeaderProps) => {
     navigate(view);
   };
   const logOut = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
+    Cookies.remove("token");
     navigate("/");
     window.location.reload();
   };
 
   return (
-    <nav className="flex-no-wrap top-0 flex w-full items-center justify-between  py-4 shadow-md shadow-black/5 sticky px-12">
+    <nav className="flex-no-wrap top-0 flex w-full items-center justify-between  bg-slate-50  py-4 shadow-md shadow-black/5 sticky px-12">
       <section className="flex items-center gap-4">
         <span
           className="text-2xl font-bold text-blue-800"

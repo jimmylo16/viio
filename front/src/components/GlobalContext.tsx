@@ -6,7 +6,8 @@ import {
   useState,
 } from "react";
 import { Header } from "./layout/Header";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export type views = "" | "login" | "register";
 
@@ -32,11 +33,12 @@ export const GlobalProvider = () => {
   const [view, setView] = useState<views>("");
   const [isLogged, setIsLogged] = useState<boolean>(false);
 
+  const navigate = useNavigate();
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("token");
     if (token) {
       setIsLogged(true);
-      setView("");
+      navigate("/");
     } else {
       setIsLogged(false);
     }
