@@ -42,7 +42,7 @@ export const GlobalProvider = () => {
     } else {
       setIsLogged(false);
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <GlobalContext.Provider value={{ setView, view, setIsLogged, isLogged }}>

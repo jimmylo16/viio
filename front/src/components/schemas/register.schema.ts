@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-export type RegisterForm = z.infer<typeof registerSchema>;
+export type RegisterFormSchema = z.infer<typeof registerSchema>;
 
 export const registerSchema = z.object({
   email: z
