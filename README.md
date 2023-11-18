@@ -1,8 +1,8 @@
 # viio
 
-## Back:
+# Back:
 
-# Instalation
+## Instalation
 
 1. Clone the repository and navigate to the back folder
 
@@ -30,11 +30,11 @@ $ npm install
 $ npm run start:dev
 ```
 
-# Docs
+## Docs
 
 one you start the project go to /api and you will see the swagger documentation
 
-# E2E testing
+## E2E testing
 
 Run the following command, the first time will be success as we are creating a real record in the db
 
@@ -42,7 +42,7 @@ Run the following command, the first time will be success as we are creating a r
 $ npm run test:e2e
 ```
 
-# Dockerize Backend:
+## Dockerize Backend:
 
 To run your project with docker,
 
@@ -58,7 +58,7 @@ $ docker build -t nestjs-app .
 $ docker run --rm -p 3000:3000 nestjs-app
 ```
 
-## Front
+# Front
 
 1. Navigate to the front folder
 
@@ -78,7 +78,7 @@ $ npm install
 $ npm run dev
 ```
 
-# Testing
+## Testing
 
 In the front end folder sRun the following command
 
@@ -86,7 +86,7 @@ In the front end folder sRun the following command
 $ npm run test
 ```
 
-# Dockerize FrontEnd:
+## Dockerize FrontEnd:
 
 To run your project with docker,
 
